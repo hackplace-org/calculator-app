@@ -10,8 +10,9 @@ const equals = document.getElementById("=")
 
 const clear = document.getElementById("C")
 const allClear = document.getElementById("AC")
-const openParentheses = document.getElementById("(")
-const closedPerentheses = document.getElementById(")")
+const answer = document.getElementById("Ans")
+
+const history = document.getElementById("history")
 
 let numberButtons = []
 
@@ -35,39 +36,110 @@ for (let i = 0; i <= 9; i++) {
 
 // Adding click event listeners to the operator buttons
 let operator = ""
-let operand = 0
 mult.addEventListener("click", () => {
-    if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
+    if (operator != "") {
+        result.textContent = evaluate() + " × "
+        operator = "*"
+    } else if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
         result.textContent += " × "
+        operator = "*"
     }
 })
 divide.addEventListener("click", () => {
-    if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
+    if (operator != "") {
+        result.textContent = evaluate() + " ÷ "
+        operator = "/"
+    } else if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
         result.textContent += " ÷ "
+        operator = "/"
     }
 })
 plus.addEventListener("click", () => {
-    if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
+    if (operator != "") {
+        result.textContent = evaluate() + " + "
+        operator = "+"
+    } else if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
         result.textContent += " + "
+        operator = "+"
     }
 })
 minus.addEventListener("click", () => {
-    if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
+    if (operator != "") {
+        result.textContent = evaluate() + " - "
+        operator = "-"
+    } else if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
         result.textContent += " - "
+        operator = "-"
     }
 })
 exponent.addEventListener("click", () => {
-    if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
+    if (operator != "") {
+        result.textContent = evaluate() + " ^ "
+        operator = "^"
+    } else if (result.textContent != "0" && !(result.textContent.endsWith("+") || result.textContent.endsWith("-") || result.textContent.endsWith("×") || result.textContent.endsWith("÷"))) {
         result.textContent += " ^ "
+        operator = "^"
     }
 })
 
 // Adding click event lsiteners to the clear button
 clear.addEventListener("click", () => {
-    result.textContent = 0
-})
+    let newResult = result.textContent.split(" ")
+    newResult.pop()
+    result.textContent = newResult.toString().replaceAll(",", " ")
+})  
 allClear.addEventListener("click", () => {
-    operand = 0
-    result.textContent = 0
+    result.textContent = "0"
 })
 
+/*
+// Adding event listener to the answer button
+let answerNum = undefined;
+answer.addEventListener("click", () => {
+    if (answerNum === undefined) {
+        alert("No previous answer")
+    } else {
+        result.textContent += answerNum
+    }
+})
+*/
+// Adding click event listener to the equals button
+equals.addEventListener("click", () => {
+    const equation = result.textContent.split(" ")
+    if (equation.length == 3) {
+        result.textContent = evaluate()
+    }
+})
+
+function evaluate() {
+    const equation = result.textContent.split(" ")
+    const operand1 = Number(equation[0])
+    const operand2 = Number(equation[2])
+    
+    let answer
+    switch (operator) {
+        case "+":
+            answer = operand1 + operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
+            return answer
+        case "-":
+            answer = operand1 - operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
+            return answer
+        case "*":
+            answer = operand1 * operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
+            return answer
+        case "/":
+            ranswer = operand1 / operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
+            return answer
+        case "^":
+            answer = operand1 ** operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
+            return answer
+        default:
+            return
+    }
+
+}

@@ -1,3 +1,9 @@
 .cbutton {
-    width: 50px;
+    width: 5%;
+    margin-top: .5%;
+    margin-left: .15%;
+}
+
+#\= {
+    width: 10.45%;
 }
