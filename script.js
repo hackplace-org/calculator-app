@@ -90,9 +90,10 @@ clear.addEventListener("click", () => {
 })  
 allClear.addEventListener("click", () => {
     result.textContent = "0"
+    operator = ""
 })
 
-/*
+
 // Adding event listener to the answer button
 let answerNum = undefined;
 answer.addEventListener("click", () => {
@@ -102,12 +103,13 @@ answer.addEventListener("click", () => {
         result.textContent += answerNum
     }
 })
-*/
+
 // Adding click event listener to the equals button
 equals.addEventListener("click", () => {
     const equation = result.textContent.split(" ")
     if (equation.length == 3) {
         result.textContent = evaluate()
+        operator = ""
     }
 })
 
@@ -116,28 +118,27 @@ function evaluate() {
     const operand1 = Number(equation[0])
     const operand2 = Number(equation[2])
     
-    let answer
     switch (operator) {
         case "+":
-            answer = operand1 + operand2
-            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
-            return answer
+            answerNum = operand1 + operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answerNum + "</p>")
+            return answerNum
         case "-":
-            answer = operand1 - operand2
-            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
-            return answer
+            answerNum = operand1 - operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answerNum + "</p>")
+            return answerNum
         case "*":
-            answer = operand1 * operand2
-            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
-            return answer
+            answerNum = operand1 * operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answerNum + "</p>")
+            return answerNum
         case "/":
-            ranswer = operand1 / operand2
-            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
-            return answer
+            answerNum = operand1 / operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answerNum + "</p>")
+            return answerNum
         case "^":
-            answer = operand1 ** operand2
-            history.innerHTML += ("<p>" + result.innerText + " = " + answer + "</p>")
-            return answer
+            answerNum = operand1 ** operand2
+            history.innerHTML += ("<p>" + result.innerText + " = " + answerNum + "</p>")
+            return answerNum
         default:
             return
     }
